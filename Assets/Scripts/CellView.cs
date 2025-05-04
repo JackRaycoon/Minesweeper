@@ -1,8 +1,16 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CellView : MonoBehaviour
+public class CellView : MonoBehaviour, IPointerClickHandler
 {
+   public TextMeshProUGUI text;
+   public Image icon;
+   public Sprite spriteMine;
+   public Sprite spriteFlag;
+   public Sprite spriteNone;
+
    private Cell cell;
    private GameBoard board;
 
@@ -12,16 +20,21 @@ public class CellView : MonoBehaviour
       board = b;
    }
 
-   void OnMouseDown()
+   public void OnPointerClick(PointerEventData eventData)
    {
-      if (Input.GetMouseButton(1)) // права€ кнопка Ч флаг
+      if (board.isEnd) return;
+      switch (eventData.button)
       {
-         if (!cell.isOpen)
-            cell.isFlag = !cell.isFlag;
-      }
-      else
-      {
-         board.OpenCell(cell);
+         case PointerEventData.InputButton.Right:
+            if (!cell.isOpen)
+               cell.isFlag = !cell.isFlag;
+            break;
+         case PointerEventData.InputButton.Left:
+            board.OpenCell(cell);
+            break;
+         case PointerEventData.InputButton.Middle:
+            Debug.Log("Middle click on cell!");
+            break;
       }
    }
 
@@ -31,13 +44,30 @@ public class CellView : MonoBehaviour
       if (cell.isOpen)
       {
          if (cell.isMine)
+         {
             rend.color = Color.red;
+            icon.sprite = spriteMine;
+         }
          else
+         {
             rend.color = Color.white;
+            icon.sprite = spriteNone;
+            text.text = cell.MineCountAround.ToString();
+            if (cell.MineCountAround == 0)
+               text.text = "";
+            //смена цвета
+         }
       }
       else if (cell.isFlag)
+      {
          rend.color = Color.yellow;
+         icon.sprite = spriteFlag;
+      }
       else
+      {
          rend.color = Color.gray;
+         icon.sprite = spriteNone;
+         text.text = "";
+      }
    }
 }

@@ -8,9 +8,14 @@ public static class GameSettings
    private const string UserSeed = "";
 
    // Итоговый сид, используемый в генерации (если UserSeed пустой, будет использоваться текущая метка времени)
-   public static readonly string Seed;
+   public static string Seed;
 
    static GameSettings()
+   {
+      RandomSeed();
+   }
+
+   public static void RandomSeed()
    {
       if (string.IsNullOrEmpty(UserSeed))
       {

@@ -2,16 +2,20 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class GameBoard : MonoBehaviour
 {
    public GameObject cellPrefab;
    public Transform gridParent;
 
+   public GameObject winPanel, losePanel;
+
    private Cell[,] board;
    private int remainingCells;
    private bool isFirstOpen = true;
-   private bool isEnd = false;
+   public bool isEnd = false;
 
    void Start()
    {
@@ -65,7 +69,7 @@ public class GameBoard : MonoBehaviour
       if (cell.isMine)
       {
          isEnd = true;
-         Debug.Log("Game Over");
+         losePanel.SetActive(true);
          OpenAllMines();
          return;
       }
@@ -85,7 +89,7 @@ public class GameBoard : MonoBehaviour
       if (remainingCells == GameSettings.MineCount)
       {
          isEnd = true;
-         Debug.Log("Victory!");
+         winPanel.SetActive(true);
          FlagAllMines();
       }
    }
@@ -143,5 +147,10 @@ public class GameBoard : MonoBehaviour
       foreach (var cell in board)
          if (cell.isMine)
             cell.isFlag = true;
+   }
+
+   public void BackToMainMenu()
+   {
+      SceneManager.LoadScene(0);
    }
 }
