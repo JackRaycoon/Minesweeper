@@ -92,11 +92,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b42d677da743b6f48957a1204ae0bf47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 466959965930971011}
-  icon: {fileID: 7113194079669223228}
+  upCube: {fileID: 0}
+  flagObject: {fileID: 0}
+  icon_GUI: {fileID: 0}
+  icon: {fileID: 0}
   spriteMine: {fileID: 21300000, guid: 8956899eb546c964ebad7a5581eecbc8, type: 3}
   spriteFlag: {fileID: 21300000, guid: 15d7c2faaa0d502429b23f4c15168e09, type: 3}
-  spriteNone: {fileID: 21300000, guid: 311815ced8bf7f841bfcc88fb6b2131d, type: 3}
+  spritesNumber:
+  - {fileID: 21300000, guid: 311815ced8bf7f841bfcc88fb6b2131d, type: 3}
+  - {fileID: 21300000, guid: 30934d4b6423333439fa06090aeb1129, type: 3}
+  - {fileID: 21300000, guid: 1cfd6ac8dbf393c4382db20c26865ad4, type: 3}
+  - {fileID: 21300000, guid: ef31c6ecd4948b54db5a11bd27b3b8a3, type: 3}
+  - {fileID: 21300000, guid: df3bcd0496860c149b557390f00751f7, type: 3}
+  - {fileID: 21300000, guid: a59c4849df48c2f4a88df82203818e10, type: 3}
+  - {fileID: 21300000, guid: bd541d06f6d4b694a94a626b15b11c5f, type: 3}
+  - {fileID: 21300000, guid: 7eabf64a5f514bb42b40a54bc45d7889, type: 3}
+  - {fileID: 21300000, guid: aa547448abf1d05459cafdc8083f30a4, type: 3}
 --- !u!61 &-3819014000766090020
 BoxCollider2D:
   m_ObjectHideFlags: 0

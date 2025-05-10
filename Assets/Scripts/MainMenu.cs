@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
    public Button mode2d, mode3d;
-   private bool is2Dmode = false;
 
    private void Start()
    {
@@ -16,8 +15,8 @@ public class MainMenu : MonoBehaviour
    }
    public void ModeSwitch()
    {
-      is2Dmode = !is2Dmode;
-      if (is2Dmode)
+      GameSettings.is2Dmode = !GameSettings.is2Dmode;
+      if (GameSettings.is2Dmode)
       {
          mode2d.interactable = false;
          mode3d.interactable = true;
@@ -41,6 +40,6 @@ public class MainMenu : MonoBehaviour
    public void StartBtn()
    {
       GameSettings.RandomSeed();
-      SceneManager.LoadScene(is2Dmode ? 1 : 2);
+      SceneManager.LoadScene(GameSettings.is2Dmode ? 1 : 2);
    }
 }

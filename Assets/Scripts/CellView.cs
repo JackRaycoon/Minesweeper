@@ -1,38 +1,53 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class CellView : MonoBehaviour, IPointerClickHandler
 {
-   public TextMeshProUGUI text;
-   public Image icon;
+   public GameObject upCube;
+   public GameObject flagObject;
+   public Image icon_GUI;
+   public SpriteRenderer icon;
    public Sprite spriteMine;
    public Sprite spriteFlag;
-   public Sprite spriteNone;
+   public List<Sprite> spritesNumber;
 
    private Cell cell;
    private GameBoard board;
+   private bool is2D;
 
-   public void Init(Cell c, GameBoard b)
+   private Image rend;
+
+   public void Init(Cell c, GameBoard b, bool isD)
    {
       cell = c;
       board = b;
+      is2D = isD;
+      if(isD)
+         rend = GetComponent<Image>();
    }
 
    public void OnPointerClick(PointerEventData eventData)
    {
+      Click((int)eventData.button);
+   }
+
+   public void Click(int id)
+   {
       if (board.isEnd) return;
-      switch (eventData.button)
+      switch (id)
       {
-         case PointerEventData.InputButton.Right:
+         case 0:
+            board.OpenCell(cell);
+            break;
+         case 1:
             if (!cell.isOpen)
                cell.isFlag = !cell.isFlag;
             break;
-         case PointerEventData.InputButton.Left:
-            board.OpenCell(cell);
-            break;
-         case PointerEventData.InputButton.Middle:
+         case 2:
             Debug.Log("Middle click on cell!");
             break;
       }
@@ -40,34 +55,60 @@ public class CellView : MonoBehaviour, IPointerClickHandler
 
    void Update()
    {
-      var rend = GetComponent<Image>();
       if (cell.isOpen)
       {
+         if(upCube != null)
+            upCube.GetComponent<MeshRenderer>().enabled = false;
          if (cell.isMine)
          {
-            rend.color = Color.red;
-            icon.sprite = spriteMine;
+            //rend.color = Color.red; //?
+            if (is2D)
+            {
+               icon_GUI.sprite = spriteMine;
+            }
+            else
+            {
+               icon.sprite = spriteMine;
+            }
          }
          else
          {
-            rend.color = Color.white;
-            icon.sprite = spriteNone;
-            text.text = cell.MineCountAround.ToString();
-            if (cell.MineCountAround == 0)
-               text.text = "";
+            //rend.color = Color.white;
+            if (is2D)
+            {
+               icon_GUI.sprite = spritesNumber[cell.MineCountAround];
+            }
+            else
+            {
+               icon.sprite = spritesNumber[cell.MineCountAround];
+            }
             //смена цвета
          }
       }
       else if (cell.isFlag)
       {
-         rend.color = Color.yellow;
-         icon.sprite = spriteFlag;
+         //rend.color = Color.yellow;
+         if (is2D)
+         {
+            icon_GUI.sprite = spriteFlag;
+         }
+         else
+         {
+            flagObject.SetActive(true);
+         }
       }
       else
       {
-         rend.color = Color.gray;
-         icon.sprite = spriteNone;
-         text.text = "";
+         //rend.color = Color.gray;
+         if (is2D)
+         {
+            icon_GUI.sprite = spritesNumber[0];
+         }
+         else
+         {
+            icon.sprite = spritesNumber[0];
+            flagObject.SetActive(false);
+         }
       }
    }
 }

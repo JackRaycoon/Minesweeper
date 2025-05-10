@@ -8,7 +8,11 @@ using UnityEngine.SceneManagement;
 public class GameBoard : MonoBehaviour
 {
    public GameObject cellPrefab;
+   public GameObject cubeUpPrefab;
    public Transform gridParent;
+   public Transform cubeParent;
+
+   public Transform cameraTrans = null;
 
    public GameObject winPanel, losePanel;
 
@@ -28,16 +32,23 @@ public class GameBoard : MonoBehaviour
       board = new Cell[size, size];
       remainingCells = size * size;
 
-      var grid = gridParent.GetComponent<GridLayoutGroup>();
-      grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-      grid.constraintCount = size;
+      if (GameSettings.is2Dmode)
+      {
+         var grid = gridParent.GetComponent<GridLayoutGroup>();
+         grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+         grid.constraintCount = size;
 
-      // Вычисляем высоту панели, на которой находится GridLayoutGroup
-      float panelHeight = ((RectTransform)gridParent).rect.height;
-      float cellSize = panelHeight / size - 10;
+         // Вычисляем высоту панели, на которой находится GridLayoutGroup
+         float panelHeight = ((RectTransform)gridParent).rect.height;
+         float cellSize = panelHeight / size - 10;
 
-      // Задаём квадратный размер ячейки
-      grid.cellSize = new Vector2(cellSize, cellSize);
+         // Задаём квадратный размер ячейки
+         grid.cellSize = new Vector2(cellSize, cellSize);
+      }
+      else
+      {
+         cameraTrans.position = new((size - 1) / 2f, size + 3, (size + size / 2.5f) / 2f);
+      }
 
       for (int x = 0; x < size; x++)
       {
@@ -46,8 +57,16 @@ public class GameBoard : MonoBehaviour
             var cell = new Cell(x, y);
             board[x, y] = cell;
 
-            GameObject go = Instantiate(cellPrefab, gridParent);
-            go.GetComponent<CellView>().Init(cell, this);
+            if (GameSettings.is2Dmode)
+            {
+               GameObject go = Instantiate(cellPrefab, gridParent);
+               go.GetComponent<CellView>().Init(cell, this, true);
+            }
+            else
+            {
+               GameObject go = Instantiate(cubeUpPrefab, new Vector3(x, 1, y), Quaternion.Euler(0, 180, 0), cubeParent);
+               go.GetComponent<CellView>().Init(cell, this, false);
+            }
          }
       }
    }

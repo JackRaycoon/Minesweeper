@@ -3,9 +3,10 @@ using UnityEngine;
 
 public static class GameSettings
 {
-   public const int BoardSize = 9;
-   public const int MineCount = 10;
-   private const string UserSeed = "";
+   public static int BoardSize = 9;
+   public static int MineCount = 10;
+   private static string UserSeed = "";
+   public static bool is2Dmode = false;
 
    // Итоговый сид, используемый в генерации (если UserSeed пустой, будет использоваться текущая метка времени)
    public static string Seed;
