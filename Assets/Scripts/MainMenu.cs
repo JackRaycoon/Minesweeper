@@ -11,11 +11,12 @@ public class MainMenu : MonoBehaviour
 
    private void Start()
    {
-      ModeSwitch();
+      ModeSwitch(false);
    }
-   public void ModeSwitch()
+   public void ModeSwitch(bool isNeedSwitch)
    {
-      GameSettings.is2Dmode = !GameSettings.is2Dmode;
+      if(isNeedSwitch)
+         GameSettings.is2Dmode = !GameSettings.is2Dmode;
       if (GameSettings.is2Dmode)
       {
          mode2d.interactable = false;

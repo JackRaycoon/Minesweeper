@@ -102,11 +102,11 @@ public class CellView : MonoBehaviour, IPointerClickHandler
          //rend.color = Color.gray;
          if (is2D)
          {
-            icon_GUI.sprite = spritesNumber[0];
+            icon_GUI.sprite = spritesNumber[9];
          }
          else
          {
-            icon.sprite = spritesNumber[0];
+            icon.sprite = spritesNumber[9];
             flagObject.SetActive(false);
          }
       }

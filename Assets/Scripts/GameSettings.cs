@@ -5,8 +5,8 @@ public static class GameSettings
 {
    public static int BoardSize = 9;
    public static int MineCount = 10;
-   private static string UserSeed = "";
-   public static bool is2Dmode = false;
+   public static string UserSeed = "";
+   public static bool is2Dmode = true;
 
    // Итоговый сид, используемый в генерации (если UserSeed пустой, будет использоваться текущая метка времени)
    public static string Seed;
